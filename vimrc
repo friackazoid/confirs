@@ -27,13 +27,14 @@ Plugin 'junegunn/fzf'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'ervandew/supertab'
+Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 " Generic Programming Support 
 " Plugin 'jakedouglas/exuberant-ctags'
 " Plugin 'Townk/vim-autoclose'
 " Plugin 'rip-rip/clang_complete'
 Plugin 'neomake/neomake'
-" Plugin 'vim-scripts/indentpython.vim'
+Plugin 'vim-scripts/indentpython.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'nvie/vim-flake8'
 
@@ -87,9 +88,6 @@ set shiftwidth=4
 set expandtab
 set smarttab
 
-" Enable folding
-set foldmethod=indent
-set foldlevel=99
 
 set laststatus=2
 " Enable highlighting of the current line
@@ -132,12 +130,33 @@ let g:syntastic_check_on_open = 1
 
 let g:SimpylFold_docstring_preview=1
 
+" YouCompleteMe Setup
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+" enable all Python syntax highlighting features
+let python_highlight_all = 1
+
 " setup make program and directory
 set makeprg=make\ -C\ build\ -j9
 
 " Neomake settings
 autocmd! BufWritePost * Neomake
 let g:neomake_elixir_enabled_makers = ['mix', 'credo', 'dogma']
+
+au BufNewFile,BufRead *.py
+            \ set tabstop=4 |
+            \ set softtabstop=4 |
+            \ set shiftwidth=4 |
+            \ set textwidth=79 |
+            \ set expandtab |
+            \ set autoindent |
+            \ set fileformat=unix
+
+au BufNewFile,BufRead *.js, *.html, *.css
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2
 
 au BufRead,BufNewFile *.launch set filetype=xml
 
@@ -159,28 +178,28 @@ endfunc
 " --- COMMON STUFF / HELPERS ---
 "
 "  " Toggle show tabs and trailing spaces
-nnoremap <leader>c :set nolist!<CR>
+" nnoremap <leader>c :set nolist!<CR>
 "
 "  " Clear the search highlight
 nnoremap <silent> \ :silent nohlsearch<CR>
 "
 "  " text wrap: Hard wrap paragraph text (similar to TextMate Ctrl+Q)
-nnoremap <leader>tw gqip
-nnoremap <leader>nw :set nowrap<CR>
+" nnoremap <leader>tw gqip
+" nnoremap <leader>nw :set nowrap<CR>
 "
 "  " Reformat code
-nnoremap <leader>rf gg=G
+" nnoremap <leader>rf gg=G
 "
 "  " I use retab too much and it's hard to type
-nnoremap <leader>rt :retab!<CR>
+" nnoremap <leader>rt :retab!<CR>
 "
 "  " Pull word under cursor into LHS of a substitute (find and replace)
 "  nnoremap <leader>rr :silent call KeywordsAll()<CR>
 "  :%s#\<<C-r>=expand("<cword>")<CR>\>#
 "
 " " fast Ack
-nnoremap <leader>a :tab split<CR>:Ack<Space>
-nnoremap <leader>aw :silent call KeywordsAll()<CR> :tab
+" nnoremap <leader>a :tab split<CR>:Ack<Space>
+" nnoremap <leader>aw :silent call KeywordsAll()<CR> :tab
 "
 " " Toggle spelling hints
 nnoremap <silent> <leader>ts :set spell!<CR>
@@ -205,13 +224,15 @@ nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 
 " Enable folding with the spacebar
+let g:SimpylFold_docstring_preview=1
+set foldmethod=indent
+set foldlevel=99
 nnoremap <space> za
 
 nnoremap <F6> :make!<cr>
 
 " Fzf Configuration
 " This is the default extra key bindings
-
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
