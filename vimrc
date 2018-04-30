@@ -24,7 +24,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'majutsushi/tagbar'
 Plugin 'junegunn/fzf.vim'
 Plugin 'junegunn/fzf'
-Plugin 'Shougo/neocomplete.vim'
+" Plugin 'Shougo/neocomplete.vim'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'ervandew/supertab'
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
@@ -32,11 +32,11 @@ Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 " Generic Programming Support 
 " Plugin 'jakedouglas/exuberant-ctags'
 " Plugin 'Townk/vim-autoclose'
-" Plugin 'rip-rip/clang_complete'
 Plugin 'neomake/neomake'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'nvie/vim-flake8'
+Plugin 'aklt/plantuml-syntax'
 
 " Theme / Interface
 Plugin 'vim-airline/vim-airline'
@@ -96,19 +96,6 @@ set cursorline
 set colorcolumn=110
 highlight ColorColumn ctermbg=darkgray
 
-" path to directory where library can be found
-" let g:clang_library_path='/usr/lib/llvm-3.8/lib'
-" or path directly to the library file
-" let g:clang_library_path='/usr/lib/llvm-3.8/lib/libclang-3.8.so.1'
-" let g:ctrlk_clang_library_path="/usr/lib/llvm-3.8/lib/libclang-3.8.so.1"
-" nmap <F3> :call GetCtrlKState()<CR>
-" nmap <C-k> :call CtrlKNavigateSymbols()<CR>
-" nmap <F2> :call CtrlKGoToDefinition()<CR>
-" nmap <F12> :call CtrlKGetReferences()<CR>
-
-" nmap <F4> :call CtrlKGoToDefinitionWithSplit('j')<CR>
-" nmap <F5> :call CtrlKGoToDefinitionWithSplit('k')<CR>
-
 " Vim-Airline Configuration
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1 
@@ -131,8 +118,13 @@ let g:syntastic_check_on_open = 1
 let g:SimpylFold_docstring_preview=1
 
 " YouCompleteMe Setup
-let g:ycm_autoclose_preview_window_after_completion=1
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_seed_identifiers_with_syntax=1
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf=0
+let g:ycm_collect_identifiers_from_tag_files = 1
+set completeopt=longest,menu
+" let g:ycm_autoclose_preview_window_after_completion=1
+" map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " enable all Python syntax highlighting features
 let python_highlight_all = 1
@@ -270,28 +262,28 @@ let g:fzf_colors =
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 " Neocomplete Settings
-let g:acp_enableAtStartup = 0
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#sources#syntax#min_keyword_length = 3
+" let g:acp_enableAtStartup = 0
+" let g:neocomplete#enable_at_startup = 1
+" let g:neocomplete#enable_smart_case = 1
+" let g:neocomplete#sources#syntax#min_keyword_length = 3
 
 " Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
+" let g:neocomplete#sources#dictionary#dictionaries = {
+"    \ 'default' : '',
+"    \ 'vimshell' : $HOME.'/.vimshell_hist',
+"    \ 'scheme' : $HOME.'/.gosh_completions'
+"        \ }
 
 " Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-        let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+" if !exists('g:neocomplete#keyword_patterns')
+"        let g:neocomplete#keyword_patterns = {}
+"endif
+" let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
 
 """""""""""""""""""""""""""""""""""""
 " Mappings configurationn
-" """""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""
 map <C-n> :NERDTreeToggle<CR>
 
 " Mapping selecting Mappings
@@ -308,4 +300,8 @@ omap <leader><tab> <plug>(fzf-maps-o)
 " Advanced customization using autoload functions
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 
-
+"""""""""""""""""""""""""""""""""""""
+" Plant UML
+"""""""""""""""""""""""""""""""""""""
+let g:plantuml_executable_script='java -jar /usr/share/plantuml/plantuml.jar'
+autocmd FileType plantuml nnoremap <buffer> <leader>b :!java -jar /usr/share/plantuml/plantuml.jar -o %:p:h %<cr>
