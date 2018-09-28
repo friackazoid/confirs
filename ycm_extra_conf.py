@@ -6,18 +6,20 @@ import ycm_core
 import re
 
 BASE_FLAGS = [
-        '-Wall',
-        '-Wextra',
-        '-Wno-long-long',
-        '-Wno-variadic-macros',
-        '-fexceptions',
-        '-ferror-limit=10000',
-        '-DNDEBUG',
-        '-std=c++1z',
-        '-xc++',
-        '-I/usr/lib/',
-        '-I/usr/include/'
-        ]
+    '-Wall',
+    '-Wextra',
+    '-Wno-long-long',
+    '-Wno-variadic-macros',
+    '-fexceptions',
+    '-ferror-limit=10000',
+    '-DNDEBUG',
+    '-std=c++1z',
+    '-xc++',
+    '-I/usr/lib/',
+    '-I/usr/include/',
+    '-I/opt/ros/kinetic/include',
+    '-I./include/'
+]
 
 SOURCE_EXTENSIONS = [
         '.cpp',
@@ -46,9 +48,11 @@ HEADER_DIRECTORIES = [
 
 BUILD_DIRECTORY = 'build';
 
+
 def IsHeaderFile(filename):
     extension = os.path.splitext(filename)[1]
     return extension in HEADER_EXTENSIONS
+
 
 def GetCompilationInfoForFile(database, filename):
     if IsHeaderFile(filename):
