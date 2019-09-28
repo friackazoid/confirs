@@ -6,6 +6,8 @@ set encoding=utf8
 set exrc
 set secure
 
+let mapleader = ','
+
 """" START Vundle Configuration
 filetype off                  " required
 
@@ -27,23 +29,23 @@ Plugin 'junegunn/fzf'
 " Plugin 'Shougo/neocomplete.vim'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'ervandew/supertab'
-Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+" Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 " Generic Programming Support 
 " Plugin 'jakedouglas/exuberant-ctags'
 " Plugin 'Townk/vim-autoclose'
 Plugin 'neomake/neomake'
-Plugin 'vim-scripts/indentpython.vim'
+" Plugin 'vim-scripts/indentpython.vim'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'nvie/vim-flake8'
-Plugin 'aklt/plantuml-syntax'
+" Plugin 'nvie/vim-flake8'
+" Plugin 'aklt/plantuml-syntax'
 
 " Theme / Interface
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ryanoasis/vim-devicons'
-" Plugin 'ryanoasis/nerd-fonts'
-Plugin 'tmhedberg/SimpylFold'
+Plugin 'ryanoasis/nerd-fonts'
+" Plugin 'tmhedberg/SimpylFold'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
@@ -61,6 +63,7 @@ Plugin 'git://git.wincent.com/command-t.git'
  " Pass the path to set the runtimepath properly.
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
+Plugin 'mattn/emmet-vim'
 
  " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -223,7 +226,10 @@ nnoremap <space> za
 
 nnoremap <F6> :make!<cr>
 
-" Fzf Configuration
+""""""""""""""""""""""""""""""""""""" Fzf Configuration 
+
+nnoremap <C-p> :<C-u>FZF<CR>
+
 " This is the default extra key bindings
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
@@ -236,8 +242,8 @@ let g:fzf_action = {
 let g:fzf_layout = { 'down': '~40%' }
 
 " In Neovim, you can set up fzf window using a Vim command
-let g:fzf_layout = { 'window': 'enew' }
-let g:fzf_layout = { 'window': '-tabnew' }
+" let g:fzf_layout = { 'window': 'enew' }
+" let g:fzf_layout = { 'window': '-tabnew' }
 
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
@@ -285,11 +291,16 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 " Mappings configurationn
 """""""""""""""""""""""""""""""""""""
 map <C-n> :NERDTreeToggle<CR>
+let g:webdevicons_enable_nerdtree = 1
+
+map <C-m> :TagbarToggle<CR>
+
+map ; :Files<CR>
 
 " Mapping selecting Mappings
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
+" nmap <leader><tab> <plug>(fzf-maps-n)
+" xmap <leader><tab> <plug>(fzf-maps-x)
+" omap <leader><tab> <plug>(fzf-maps-o)
 
 " Insert mode completion
 " imap <c-x><c-k> <plug>(fzf-complete-word)
@@ -305,3 +316,10 @@ inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 """""""""""""""""""""""""""""""""""""
 let g:plantuml_executable_script='java -jar /usr/share/plantuml/plantuml.jar'
 autocmd FileType plantuml nnoremap <buffer> <leader>b :!java -jar /usr/share/plantuml/plantuml.jar -o %:p:h %<cr>
+
+
+""""""""""""""""""""""""""""""""""
+" JSON
+""""""""""""""""""""""""""""""""""
+
+nnoremap <F3> :%!python -m json.tool<CR>
