@@ -7,8 +7,7 @@ set encoding=utf8
 " set exrc
 " mitigates risks of exrc
 " set secure
-
-let mapleader = '/'
+let mapleader = '\'
 
 """" START Vundle Configuration
 filetype off                  " required
@@ -24,7 +23,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 " Utility
 Plugin 'scrooloose/nerdtree'
-" Plugin 'majutsushi/tagbar'
+Plugin 'majutsushi/tagbar'
 Plugin 'junegunn/fzf.vim'
 Plugin 'junegunn/fzf'
 " Plugin 'Shougo/neocomplete.vim'
@@ -224,7 +223,6 @@ nnoremap <space> za
 " nnoremap <F6> :make!<cr>
 
 """"""""""""""""""""""""""""""""""""" Fzf Configuration 
-map ; :Files<CR>
 
 " This is the default extra key bindings
 let g:fzf_action = {
@@ -236,7 +234,7 @@ let g:fzf_action = {
 " Default fzf layout
 " - down / up / left / right
 let g:fzf_layout = { 'down': '~40%' }
-let g:fzf_preview_window = ['right,50%', 'ctrl-\']
+let g:fzf_preview_window = ['right,50%', 'ctrl-/']
 
 " In Neovim, you can set up fzf window using a Vim command
 " let g:fzf_layout = { 'window': 'enew' }
@@ -264,13 +262,19 @@ let g:fzf_colors =
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
+
+nnoremap <C-f> :Files<CR>
+nnoremap <leader>f :Rg<CR>
+nnoremap <leader>g :Commits<CR>
+nnoremap <leader>hh :History<CR>
+
 """""""""""""""""""""""""""""""""""""
 " Mappings configurationn
 """""""""""""""""""""""""""""""""""""
 map <C-n> :NERDTreeToggle<CR>
 let g:webdevicons_enable_nerdtree = 1
 
-" map <C-m> :TagbarToggle<CR>
+nmap <F8> :TagbarToggle<CR>
 
 
 " Mapping selecting Mappings
@@ -285,7 +289,7 @@ let g:webdevicons_enable_nerdtree = 1
 " imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " Advanced customization using autoload functions
-inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
+" inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 
 """"""""""""""""""""""""""""""""""
 " JSON
