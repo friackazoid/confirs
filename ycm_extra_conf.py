@@ -58,6 +58,7 @@ BASE_FLAGS = [
     '-isystem', '/usr/local/include',
     '-isystem', '/usr/include/x86_64-linux-gnu',
     '-isystem', '/usr/include',
+    '-isystem', '/usr/include/eigen3'
 ]
 
 SOURCE_EXTENSIONS = [
@@ -224,6 +225,7 @@ def Settings( **kwargs):
     return  {
             'flags': final_flags
     }
+
 
 def GetStandardLibraryIndexInSysPath( sys_path ):
   for index, path in enumerate( sys_path ):
