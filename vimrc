@@ -23,20 +23,18 @@ Plugin 'VundleVim/Vundle.vim'
 
 " Utility
 Plugin 'scrooloose/nerdtree'
-Plugin 'majutsushi/tagbar'
+Plugin 'majutsushi/tagbar' " requires exuberant-ctags; installed exteranally
 Plugin 'junegunn/fzf.vim'
 Plugin 'junegunn/fzf'
-" Plugin 'Shougo/neocomplete.vim'
-" Plugin 'ervandew/supertab'
-" Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 " Generic Programming Support 
-" Plugin 'jakedouglas/exuberant-ctags'
 " Plugin 'Townk/vim-autoclose'
 " Plugin 'neomake/neomake'
-" Plugin 'vim-scripts/indentpython.vim'
 Plugin 'Valloric/YouCompleteMe'
+
+" Python
 " " Plugin 'nvie/vim-flake8'
+" Plugin 'vim-scripts/indentpython.vim'
 " " Plugin 'aklt/plantuml-syntax'
 "
 " Theme / Interface
@@ -45,25 +43,8 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ryanoasis/vim-devicons'
 " Plugin 'ryanoasis/nerd-fonts'
 Plugin 'tmhedberg/SimpylFold'
-
-" plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
-" Plugin 'FuzzyFinder'
-" Plugin 'SkidanovAlex/CtrlK'
-
-" Git plugin not hosted on GitHub
-" Plugin 'git://git.wincent.com/command-t.git'
-
-   
-" git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
-
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-
-" Plugin 'mattn/emmet-vim'
-Plugin 'rdnetto/YCM-Generator'
+Plugin 'rhysd/vim-clang-format'
+Plugin 'dense-analysis/ale'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -294,5 +275,21 @@ nmap <F8> :TagbarToggle<CR>
 """"""""""""""""""""""""""""""""""
 " JSON
 """"""""""""""""""""""""""""""""""
-
 nnoremap <F3> :%!python -m json.tool<CR>
+
+""""""""""""""""""""""""""""""""""
+" clang-format
+""""""""""""""""""""""""""""""""""
+let g:clang_format#style_options = {
+                \ "AccessModifierOffset" : -4,
+                \ "AllowShortIfStatementsOnASingleLine" : "true",
+                \ "AlwaysBreakTemplateDeclarations" : "true",
+                \ "Standard" : "C++11"}
+
+" map to <Leader>cf in C++ code
+autocmd FileType c,cpp,objc nnoremap <buffer><leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><leader>cf :ClangFormat<CR>
+" if you install vim-operator-user
+autocmd FileType c,cpp,objc map <buffer><leader>x <Plug>(operator-clang-format)
+" Toggle auto formatting:
+nmap <Leader>C :ClangFormatAutoToggle<CR>
